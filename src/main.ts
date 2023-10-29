@@ -1,24 +1,21 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import van from "vanjs-core";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+import { Uploader } from "components/uploader";
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+import "assets/style.css";
+
+const dom = document.body as HTMLBodyElement;
+
+van.add(dom, Uploader());
+
+const handleLoad = () => {
+  console.log("load");
+};
+
+const handleUnload = () => {
+  window.removeEventListener("load", handleLoad);
+  window.removeEventListener("unload", handleUnload);
+};
+
+window.addEventListener("load", handleLoad);
+window.addEventListener("unload", handleUnload);
