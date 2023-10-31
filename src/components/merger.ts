@@ -2,6 +2,7 @@ import { PDFDocument } from "pdf-lib";
 import van from "vanjs-core";
 
 import { uploaderInputId } from "utils/constants";
+import { appState } from "utils/state";
 
 const { button, div } = van.tags;
 
@@ -10,7 +11,6 @@ export const Merger = () => {
     const pdfDocs = [];
     const pdfInput = document.getElementById(uploaderInputId)! as HTMLInputElement;
     const files = pdfInput.files;
-    console.log(files);
 
     if (!files) {
       return;
@@ -49,11 +49,16 @@ export const Merger = () => {
     {
       class: "merger",
     },
-    button(
-      {
-        onclick: mergePDFs,
-      },
-      "Merge PDFs",
-    ),
+    () =>
+      div(
+        appState.uploadedFiles.val > 0
+          ? button(
+              {
+                onclick: mergePDFs,
+              },
+              "Merge PDFs",
+            )
+          : null,
+      ),
   );
 };

@@ -2,13 +2,11 @@ import pluralize from "pluralize";
 import van from "vanjs-core";
 
 import { uploaderInputId } from "utils/constants";
+import { appState } from "utils/state";
 
 const { div, input, label, span } = van.tags;
 
 export const Uploader = () => {
-  const filesChosen = van.state<number>(0);
-  console.log(filesChosen.val);
-
   const handleChange = (_event: Event) => {
     const pdfInput = document.getElementById(uploaderInputId)! as HTMLInputElement;
     const files = pdfInput.files;
@@ -17,7 +15,7 @@ export const Uploader = () => {
       return;
     }
 
-    filesChosen.val = files.length;
+    appState.uploadedFiles.val = files.length;
   };
 
   return div(
@@ -39,7 +37,11 @@ export const Uploader = () => {
     }),
     span(
       {},
-      () => `${filesChosen.val > 0 ? filesChosen.val.toString() : "No"} ${pluralize("file", filesChosen.val)} chosen`,
+      () =>
+        `${appState.uploadedFiles.val > 0 ? appState.uploadedFiles.val.toString() : "No"} ${pluralize(
+          "file",
+          appState.uploadedFiles.val,
+        )} chosen`,
     ),
   );
 };
