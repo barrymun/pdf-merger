@@ -85,8 +85,19 @@ export const Merger = () => {
     {
       class: "merger",
     },
+    div(
+      iframe({
+        id: mergerIframeId,
+        type: "application/pdf",
+        width: "100%",
+        height: () => ((appState.uploadedFiles.val ?? []).length > 0 ? "100%" : 0),
+      }),
+    ),
     () =>
       div(
+        {
+          class: "download-btn-cntr",
+        },
         (appState.uploadedFiles.val ?? []).length > 0
           ? button(
               {
@@ -96,13 +107,5 @@ export const Merger = () => {
             )
           : null,
       ),
-    div(
-      iframe({
-        id: mergerIframeId,
-        type: "application/pdf",
-        width: "100%",
-        height: "600px",
-      }),
-    ),
   );
 };
