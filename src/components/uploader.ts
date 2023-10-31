@@ -15,7 +15,7 @@ export const Uploader = () => {
       return;
     }
 
-    appState.uploadedFiles.val = files.length;
+    appState.uploadedFiles.val = files;
   };
 
   return div(
@@ -38,10 +38,9 @@ export const Uploader = () => {
     span(
       {},
       () =>
-        `${appState.uploadedFiles.val > 0 ? appState.uploadedFiles.val.toString() : "No"} ${pluralize(
-          "file",
-          appState.uploadedFiles.val,
-        )} chosen`,
+        `${
+          (appState.uploadedFiles.val ?? []).length > 0 ? (appState.uploadedFiles.val ?? []).length.toString() : "No"
+        } ${pluralize("file", (appState.uploadedFiles.val ?? []).length)} chosen`,
     ),
   );
 };

@@ -1,10 +1,10 @@
 import { PDFDocument } from "pdf-lib";
 import van from "vanjs-core";
 
-import { uploaderInputId } from "utils/constants";
+import { mergerIframeId, uploaderInputId } from "utils/constants";
 import { appState } from "utils/state";
 
-const { button, div } = van.tags;
+const { button, div, iframe } = van.tags;
 
 export const Merger = () => {
   const mergePDFs = async () => {
@@ -36,8 +36,31 @@ export const Merger = () => {
       }
     }
 
+    // save the merged PDF to appState
+    appState.mergedPdf.val = mergedPdf;
+
+    showPreview();
+  };
+
+  const showPreview = async () => {
+    if (!appState.mergedPdf.val) {
+      return;
+    }
+
+    // Assume mergedPdf is your PDFDocument instance
+    const base64String = await appState.mergedPdf.val.saveAsBase64();
+    const src = `data:application/pdf;base64,${base64String}`;
+    const iframe = document.getElementById(mergerIframeId)! as HTMLIFrameElement;
+    iframe.src = src;
+  };
+
+  const download = async () => {
+    if (!appState.mergedPdf.val) {
+      return;
+    }
+
     // Serialize the merged PDF to bytes and provide it for download
-    const mergedPdfBytes = await mergedPdf.save();
+    const mergedPdfBytes = await appState.mergedPdf.val.save();
     const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -45,20 +68,41 @@ export const Merger = () => {
     link.click();
   };
 
+  van.derive(() => {
+    if ((appState.uploadedFiles.val ?? []).length === 0) {
+      const iframe = document.getElementById(mergerIframeId) as HTMLIFrameElement | undefined;
+      if (!iframe) {
+        return;
+      }
+      iframe.src = "";
+      return;
+    }
+
+    mergePDFs();
+  });
+
   return div(
     {
       class: "merger",
     },
     () =>
       div(
-        appState.uploadedFiles.val > 0
+        (appState.uploadedFiles.val ?? []).length > 0
           ? button(
               {
-                onclick: mergePDFs,
+                onclick: download,
               },
               "Merge PDFs",
             )
           : null,
       ),
+    div(
+      iframe({
+        id: mergerIframeId,
+        type: "application/pdf",
+        width: "100%",
+        height: "600px",
+      }),
+    ),
   );
 };

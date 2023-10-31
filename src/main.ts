@@ -11,7 +11,7 @@ van.add(dom, Uploader());
 van.add(dom, Merger());
 
 const handleLoad = () => {
-  console.log("load");
+  // console.log("load");
 };
 
 const handleUnload = () => {
