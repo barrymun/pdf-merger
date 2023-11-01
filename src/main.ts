@@ -13,7 +13,7 @@ van.add(dom, Organiser());
 van.add(dom, Merger());
 
 const handleLoad = () => {
-  // console.log("load");
+  // do something on load
 };
 
 const handleUnload = () => {

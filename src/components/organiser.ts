@@ -35,10 +35,10 @@ export const Organiser = () => {
     }
 
     sortableEl.innerHTML = "";
+    // filthy hack as doing this in the returned value seems to cause problems 😈
     Array.from(appState.uploadedFiles.val ?? []).forEach((file) => {
       sortableEl.appendChild(
         li({
-          class: "file",
           textContent: file.name,
         }),
       );
@@ -71,7 +71,6 @@ export const Organiser = () => {
         { id: sortableFilesListId },
         // Array.from(appState.uploadedFiles.val ?? []).map((file) => {
         //   return li({
-        //     // class: "file",
         //     textContent: file.name,
         //   });
         // }),
