@@ -99,9 +99,17 @@ iframe {
   padding: 16px;
 }
 
+.organiser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .organiser > ul {
   list-style: none;
   padding: 0;
+
+  max-width: 60vw;
 }
 
 .organiser > ul > li {
