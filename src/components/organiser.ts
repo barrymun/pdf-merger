@@ -51,12 +51,21 @@ export const Organiser = () => {
     });
   };
 
+  const clearList = () => {
+    const sortableEl = document.getElementById(sortableFilesListId) as HTMLUListElement | undefined;
+    if (!sortableEl) {
+      return;
+    }
+    sortableEl.innerHTML = "";
+  };
+
   van.derive(() => {
     if (sortable) {
       sortable.destroy();
       sortable = undefined;
     }
     if ((appState.uploadedFiles.val ?? []).length === 0) {
+      clearList();
       return;
     }
     createSortableList();
