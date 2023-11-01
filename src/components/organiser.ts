@@ -9,6 +9,23 @@ const { div, ul, li } = van.tags;
 let sortable: Sortable | undefined;
 
 export const Organiser = () => {
+  /**
+   * re-order the files as per the user's drag and drop selection
+   */
+  const handleUpdate = () => {
+    const sortableEl = document.getElementById(sortableFilesListId) as HTMLUListElement;
+    const options = Array.from(sortableEl.querySelectorAll("li")).map((li) => li.textContent);
+    const newFiles: File[] = [];
+    for (const option of options) {
+      const file = Array.from(appState.uploadedFiles.val ?? []).find((file) => file.name === option);
+      if (!file) {
+        continue;
+      }
+      newFiles.push(file);
+    }
+    appState.uploadedFiles.val = newFiles as unknown as FileList;
+  };
+
   const createSortableList = async () => {
     const sortableEl = document.getElementById(sortableFilesListId) as HTMLUListElement | undefined;
     if (!sortableEl) {
@@ -30,6 +47,7 @@ export const Organiser = () => {
     sortable = Sortable.create(sortableEl, {
       group: sortableFilesListId,
       animation: 150,
+      onUpdate: handleUpdate,
     });
   };
 

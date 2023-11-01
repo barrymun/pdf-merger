@@ -31,7 +31,6 @@ export const Uploader = () => {
       onchange: handleChange,
     }),
     span(
-      {},
       () =>
         `${
           (appState.uploadedFiles.val ?? []).length > 0 ? (appState.uploadedFiles.val ?? []).length.toString() : "No"
