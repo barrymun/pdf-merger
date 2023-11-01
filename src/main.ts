@@ -1,5 +1,6 @@
 import van from "vanjs-core";
 
+import { ForkMe } from "components/fork-me";
 import { Merger } from "components/merger";
 import { Organiser } from "components/organiser";
 import { Uploader } from "components/uploader";
@@ -8,6 +9,7 @@ import "assets/style.css";
 
 const dom = document.body as HTMLBodyElement;
 
+van.add(dom, ForkMe());
 van.add(dom, Uploader());
 van.add(dom, Organiser());
 van.add(dom, Merger());
