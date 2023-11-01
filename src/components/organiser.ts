@@ -16,15 +16,24 @@ export const Organiser = () => {
       createSortableList();
       return;
     }
-    console.log({ sortableEl });
-    sortable = Sortable.create(sortableEl as HTMLUListElement, {
+
+    sortableEl.innerHTML = "";
+    Array.from(appState.uploadedFiles.val ?? []).forEach((file) => {
+      sortableEl.appendChild(
+        li({
+          class: "file",
+          textContent: file.name,
+        }),
+      );
+    });
+
+    sortable = Sortable.create(sortableEl, {
       group: sortableFilesListId,
       animation: 150,
     });
   };
 
   van.derive(() => {
-    console.log({ sortable });
     if (sortable) {
       sortable.destroy();
       sortable = undefined;
@@ -40,27 +49,14 @@ export const Organiser = () => {
       class: "organiser",
     },
     () =>
-      div(
-        (appState.uploadedFiles.val ?? []).length > 0
-          ? ul(
-              { id: sortableFilesListId },
-              Array.from(appState.uploadedFiles.val ?? []).map((file) => {
-                return li({
-                  // class: "file",
-                  textContent: file.name,
-                });
-              }),
-            )
-          : null,
-        // ul(
-        //   { id: sortableFilesListId },
-        //   Array.from(appState.uploadedFiles.val ?? []).map((file) => {
-        //     return li({
-        //       // class: "file",
-        //       textContent: file.name,
-        //     });
-        //   }),
-        // ),
+      ul(
+        { id: sortableFilesListId },
+        // Array.from(appState.uploadedFiles.val ?? []).map((file) => {
+        //   return li({
+        //     // class: "file",
+        //     textContent: file.name,
+        //   });
+        // }),
       ),
   );
 };

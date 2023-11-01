@@ -99,12 +99,12 @@ iframe {
   padding: 16px;
 }
 
-.organiser > div > ul {
+.organiser > ul {
   list-style: none;
   padding: 0;
 }
 
-.organiser > div > ul > li {
+.organiser > ul > li {
   border: 1px solid #4149d0;
   border-radius: 4px;
   margin: 1px;
