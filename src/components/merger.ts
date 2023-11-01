@@ -102,7 +102,7 @@ export const Merger = () => {
               {
                 onclick: download,
               },
-              "Merge PDFs",
+              "Download merged PDF",
             )
           : null,
       ),
