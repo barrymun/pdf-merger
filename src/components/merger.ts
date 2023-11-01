@@ -1,7 +1,7 @@
 import { PDFDocument } from "pdf-lib";
 import van from "vanjs-core";
 
-import { mergerIframeId, uploaderInputId } from "utils/constants";
+import { mergerIframeId } from "utils/constants";
 import { appState } from "utils/state";
 
 const { button, div, iframe } = van.tags;
@@ -9,8 +9,7 @@ const { button, div, iframe } = van.tags;
 export const Merger = () => {
   const mergePDFs = async () => {
     const pdfDocs = [];
-    const pdfInput = document.getElementById(uploaderInputId)! as HTMLInputElement;
-    const files = pdfInput.files;
+    const files = appState.uploadedFiles.val;
 
     if (!files) {
       return;

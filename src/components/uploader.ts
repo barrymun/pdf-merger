@@ -10,11 +10,7 @@ export const Uploader = () => {
   const handleChange = (_event: Event) => {
     const pdfInput = document.getElementById(uploaderInputId)! as HTMLInputElement;
     const files = pdfInput.files;
-
-    if (!files) {
-      return;
-    }
-
+    console.log(files);
     appState.uploadedFiles.val = files;
   };
 
