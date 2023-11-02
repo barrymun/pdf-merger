@@ -7,6 +7,7 @@ import { Uploader } from "components/uploader";
 
 import "assets/base.css";
 import "assets/style.css";
+import "assets/uploader.css";
 
 const dom = document.body as HTMLBodyElement;
 
