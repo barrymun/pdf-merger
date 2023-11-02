@@ -5,6 +5,7 @@ import { Merger } from "components/merger";
 import { Organiser } from "components/organiser";
 import { Uploader } from "components/uploader";
 
+import "assets/base.css";
 import "assets/style.css";
 
 const dom = document.body as HTMLBodyElement;
